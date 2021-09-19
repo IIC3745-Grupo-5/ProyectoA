@@ -1,4 +1,4 @@
-# Minesweeperv 🐙 :shipit: 🍙
+# Minesweeper 🐙 :shipit: 🍙
 
 ## Integrantes
 - Luciano Aguilera
