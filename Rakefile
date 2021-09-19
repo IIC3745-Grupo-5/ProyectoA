@@ -6,7 +6,7 @@ task default: %w[lint test]
 
 # start adding tasks here
 task :test do
-  ruby 'test/clock_display_test.rb'
+  # ruby 'test/clock_display_test.rb' (this is an example)
 end
 # stop adding tasks here
 
