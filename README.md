@@ -1,2 +1,8 @@
-# ProyectoA
-Repositorio para el primer proyecto del curso IIC3745
+# Minesweeperv 🐙 :shipit: 🍙
+
+## Integrantes
+- Luciano Aguilera
+- Fernando Arriagada
+- Manuel Aylwin
+- Irina Salazar
+- Diego Solari
