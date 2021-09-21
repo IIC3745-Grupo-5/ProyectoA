@@ -3,6 +3,15 @@
 require_relative './observer/observable'
 require 'matrix'
 
+class Cell 
+
+    def initialize (x0,y0, type)
+        @x = x0
+        @y = y0
+        @type = type
+        @touched = 0
+    end
+end
 
 class Board < Observable
 ## lo pense con un largo variable, en este caso deje como largo predeterminado 6x6
@@ -19,7 +28,7 @@ class Board < Observable
                 if numberRow == 0 then
                     row.push(col)
                 else
-                    row.push(" ")
+                    row.push(Cell.new(numberRow - 1,col, " "))
                 end
             end
             
@@ -28,6 +37,7 @@ class Board < Observable
         @matrix[0][0] = " "
     end
     
+
 end
 
     

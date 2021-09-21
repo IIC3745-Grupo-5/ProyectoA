@@ -6,4 +6,3 @@ require_relative './board_controller'
 require_relative './board_view'
 
 model = Board.new()
-
