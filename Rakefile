@@ -2,13 +2,17 @@
 
 require 'rubocop/rake_task'
 
+task default: %w[lint play]
+
+task :play do
+  ruby 'lib/main.rb'
+end
+
 task default: %w[lint test]
 
-# start adding tasks here
 task :test do
-  # ruby 'test/clock_display_test.rb' (this is an example)
+  # ruby 'test/board_model.rb'
 end
-# stop adding tasks here
 
 RuboCop::RakeTask.new(:lint) do |task|
   task.patterns = ['lib/**/*.rb', 'test/**/*.rb']

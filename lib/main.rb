@@ -1,8 +1,7 @@
 # frozen_string_literal: true
-require 'matrix'
 
-require_relative './board_model'
-require_relative './board_controller'
-require_relative './board_view'
+require_relative './board'
+require_relative './constants/difficulty_type'
 
-model = Board.new()
+board = Board.new(DifficultyType::INTERMEDIATE)
+board.print()
