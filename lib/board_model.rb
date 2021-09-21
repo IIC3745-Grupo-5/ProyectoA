@@ -5,6 +5,7 @@ require 'matrix'
 
 
 class Board < Observable
+## lo pense con un largo variable, en este caso deje como largo predeterminado 6x6
     def initialize(width = 5, height = 5)
         super()
         @matrix = []
