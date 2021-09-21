@@ -3,7 +3,7 @@
 require_relative './constants/cell_type'
 
 
-class Cell 
+class Cell
   def initialize(x, y, type)
     @x = x
 		@y = y

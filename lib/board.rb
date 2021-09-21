@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'terminal-table'
 require_relative './cell'
 require_relative './constants/dimensions'
 require_relative './constants/cell_type'
@@ -13,6 +14,11 @@ class Board < Observable
 		@matrix = []
 		@width, @height = Dimensions::BOARD[difficulty_level]
 		@number_of_mines = Dimensions::MINES[difficulty_level]
+		setup()
+	end
+
+	def setup
+		create_cell_array()
 		build()
 	end
 
@@ -20,25 +26,30 @@ class Board < Observable
 		for row in (0..@height)
 			row_array = []
 			for col in (0..@width)
-				row_array << Cell.new(col, row, CellType::SAFE)
+				row_array << Cell.new(col, row, random_cell_type)
 			end
 			@matrix << row_array
 		end
 	end
 
-	def print
-		print_horizontal_line
-		for row in @matrix
-			row_to_display = '|'
-			for cell in row
-				row_to_display += cell.print + '|'
-			end
-			puts row_to_display
-		end
-		print_horizontal_line
+	def create_cell_array
+		safe_cells = (@width + 1) * (@height + 1) - @number_of_mines
+		@cell_array = [CellType::SAFE] * safe_cells + [CellType::MINE] * @number_of_mines
 	end
 
-	def print_horizontal_line
-		puts '-' + '--' * @width + '-'
+	def random_cell_type
+		@cell_array.delete_at(rand(@cell_array.length))
+	end
+
+	def print
+		formatted_matrix = []
+		for row in @matrix
+			formatted_row = []
+			for cell in row
+				formatted_row << cell.print
+			end
+			formatted_matrix << formatted_row
+		end
+		puts Terminal::Table.new :rows => formatted_matrix
 	end
 end
