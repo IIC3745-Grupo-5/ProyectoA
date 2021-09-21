@@ -1,24 +1,25 @@
 name: Ruby
 
-on: 
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: pull_request
 
 jobs:
-  build:
-
+  tests:
+    name: Rubocop and Tests
     runs-on: ubuntu-latest
-
+    timeout-minutes: 3
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Ruby 3.0
-      uses: actions/setup-ruby@v1
-      with:
-        ruby-version: 3.0.x
-    - name: Build and test with Rake
-      run: |
-        gem install bundler
-        bundler install --jobs 4 --retry 3
-        bundle exec rake
+      - uses: actions/checkout@v2
+      - name: Set up Ruby 3.0
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 3.0.x
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundler install --jobs 4 --retry 3
+      - name: Run Rubocop
+        run: |
+          bundle exec rubocop
+      - name: Run Tests
+        run: |
+          bundle exec rake test

@@ -1,13 +1,16 @@
 # frozen_string_literal: true
 
+# Class for creating an observable object following the observer desgin pattern
 class Observable
   def initialize
-    @observers = Array.new
+    @observers = []
   end
-  def addObserver(observer)
+
+  def add_observer(observer)
     @observers << observer
   end
-  def notifyAll
+
+  def notify_all
     @observers.each { |observer| observer.update(self) }
   end
 end

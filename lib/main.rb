@@ -4,4 +4,4 @@ require_relative './board'
 require_relative './constants/difficulty_type'
 
 board = Board.new(DifficultyType::INTERMEDIATE)
-board.print()
+board.print
