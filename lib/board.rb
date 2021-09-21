@@ -52,7 +52,7 @@ class Board < Observable
 			end
 		end
 		board.title = 'Mine Sweeper'
-		board.headings = [' '].concat((0..@height).to_a)
+		board.headings = ['y\x'].concat((0..@height).to_a)
 		board.style = {
 			:border => Terminal::Table::UnicodeThickEdgeBorder.new(),
 			:all_separators => true
