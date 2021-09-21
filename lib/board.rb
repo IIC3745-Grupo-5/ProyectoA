@@ -42,14 +42,21 @@ class Board < Observable
 	end
 
 	def print
-		formatted_matrix = []
-		for row in @matrix
-			formatted_row = []
-			for cell in row
-				formatted_row << cell.print
+		board = Terminal::Table.new do |b|
+			@matrix.each_with_index do |row, index|
+				formatted_row = [index]
+				row.each do |cell|
+					formatted_row << cell.print
+				end
+				b.add_row formatted_row
 			end
-			formatted_matrix << formatted_row
 		end
-		puts Terminal::Table.new :rows => formatted_matrix
+		board.title = 'Mine Sweeper'
+		board.headings = [' '].concat((0..@height).to_a)
+		board.style = {
+			:border => Terminal::Table::UnicodeThickEdgeBorder.new(),
+			:all_separators => true
+		}
+		puts board
 	end
 end
