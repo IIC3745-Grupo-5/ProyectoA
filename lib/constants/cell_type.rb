@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module CellType
-  HIDDEN = '🔳'
-  SAFE = '⬜️'
+  HIDDEN = '⬜️'
+  SAFE = '🔳'
   MINE = '💣'
   FLAGGED = '🚩'
 end
