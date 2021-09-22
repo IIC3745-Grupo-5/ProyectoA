@@ -7,3 +7,4 @@ gem 'rake'
 gem 'rubocop'
 gem 'simplecov', require: false, group: :test
 gem 'terminal-table'
+gem 'test-unit'
