@@ -3,14 +3,14 @@
 require 'rake/testtask'
 require 'rubocop/rake_task'
 
-task default: 'test'
-
-Rake::TestTask.new do |task|
-  task.pattern = 'test/*_test.rb'
-end
+task default: 'play'
 
 task :play do
   ruby 'lib/main.rb'
+end
+
+Rake::TestTask.new(:test) do |task|
+  task.pattern = 'test/*_test.rb'
 end
 
 RuboCop::RakeTask.new(:lint) do |task|
