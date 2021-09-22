@@ -11,7 +11,8 @@ end
 task default: %w[lint test]
 
 task :test do
-  # ruby 'test/board_model.rb'
+  ruby 'test/cell_test.rb'
+  ruby 'test/board_test.rb'
 end
 
 RuboCop::RakeTask.new(:lint) do |task|
