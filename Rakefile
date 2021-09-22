@@ -1,18 +1,16 @@
 # frozen_string_literal: true
 
+require 'rake/testtask'
 require 'rubocop/rake_task'
 
-task default: %w[lint play]
+task default: 'test'
+
+Rake::TestTask.new do |task|
+  task.pattern = 'test/*_test.rb'
+end
 
 task :play do
   ruby 'lib/main.rb'
-end
-
-task default: %w[lint test]
-
-task :test do
-  ruby 'test/cell_test.rb'
-  ruby 'test/board_test.rb'
 end
 
 RuboCop::RakeTask.new(:lint) do |task|
