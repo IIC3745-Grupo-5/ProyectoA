@@ -3,18 +3,20 @@ name: Ruby
 on: pull_request
 
 jobs:
-  tests:
+  test:
     name: Rubocop and Tests
     runs-on: ubuntu-latest
     timeout-minutes: 3
     steps:
       - uses: actions/checkout@v2
       - name: Set up Ruby 3.0
-        uses: actions/setup-ruby@v1
+        uses: ruby/setup-ruby@477b21f02be01bcb8030d50f37cfec92bfa615b6
         with:
           bundler-cache: true
           ruby-version: 3.0.x
       - name: Install dependencies
         run: bundle install
+      - name: Run Rubocop
+        run: bundle exec rubocop
       - name: Run Tests
         run: bundle exec rake test
