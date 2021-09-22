@@ -13,13 +13,10 @@ jobs:
         uses: actions/setup-ruby@v1
         with:
           ruby-version: 3.0.x
+          bundler-cache: true
       - name: Install dependencies
-        run: |
-          gem install bundler
-          bundler install --jobs 4 --retry 3
+        run: bundle install
       - name: Run Rubocop
-        run: |
-          bundle exec rubocop
+        run: bundle exec rubocop
       - name: Run Tests
-        run: |
-          bundle exec rake test
+        run: bundle exec rake test
