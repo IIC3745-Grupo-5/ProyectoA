@@ -21,12 +21,17 @@ class Cell
     @adjacent_mines = 0
     (-1..1).each do |row_diff|
       (-1..1).each do |col_diff|
-        adjacent_cell = matrix[@y_coordinate + row_diff][@x_coordinate + col_diff]
-        @adjacent_mines += adjacent_cell.type == CellType::MINE ? 1 : 0
+        ((@y_coordinate + row_diff).negative? or (@x_coordinate + col_diff).negative?) && next
+        check_neighbor(matrix, row_diff, col_diff)
       rescue NoMethodError
         next
       end
     end
+  end
+
+  def check_neighbor(matrix, row_diff, col_diff)
+    adjacent_cell = matrix[@y_coordinate + row_diff][@x_coordinate + col_diff]
+    @adjacent_mines += adjacent_cell.type == CellType::MINE ? 1 : 0
   end
 
   def print
