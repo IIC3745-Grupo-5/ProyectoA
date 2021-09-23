@@ -13,6 +13,7 @@ GEM
     parser (3.0.2.0)
       ast (~> 2.4.1)
     path_expander (1.1.0)
+    power_assert (2.0.1)
     rainbow (3.0.0)
     rake (13.0.6)
     regexp_parser (2.1.1)
@@ -40,6 +41,8 @@ GEM
     simplecov_json_formatter (0.1.3)
     terminal-table (3.0.2)
       unicode-display_width (>= 1.1.1, < 3)
+    test-unit (3.4.7)
+      power_assert
     unicode-display_width (2.1.0)
 
 PLATFORMS
@@ -52,6 +55,7 @@ DEPENDENCIES
   rubocop
   simplecov
   terminal-table
+  test-unit
 
 BUNDLED WITH
    2.2.27

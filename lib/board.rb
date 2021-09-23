@@ -42,7 +42,8 @@ class Board < Observable
   end
 
   def print
-    board = create_printable_board
+    rows = create_printable_board
+    board = Terminal::Table.new rows: rows
     board.title = 'Mine Sweeper'
     board.headings = ['y\x'].concat((0..@height).to_a)
     board.style = {
@@ -50,17 +51,18 @@ class Board < Observable
       all_separators: true
     }
     puts board
+    rows
   end
 
   def create_printable_board
-    Terminal::Table.new do |b|
-      @matrix.each_with_index do |row, index|
-        formatted_row = [index]
-        row.each do |cell|
-          formatted_row << cell.print
-        end
-        b.add_row formatted_row
+    printable_board = []
+    @matrix.each_with_index do |row, index|
+      formatted_row = [index]
+      row.each do |cell|
+        formatted_row << cell.print
       end
+      printable_board << formatted_row
     end
+    printable_board
   end
 end
