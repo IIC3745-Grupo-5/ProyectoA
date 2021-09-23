@@ -16,19 +16,16 @@ class Cell
   end
 
   def mark_adjacent_mines(matrix)
-    unless @type == CellType::MINE
-      number_adjacent_mines = 0
-      (-1..1).each do |row_diff|
-        (-1..1).each do |col_diff|
-          begin
-            adjacent_cell = matrix[@y_coordinate + row_diff][@x_coordinate + col_diff]
-            number_adjacent_mines += adjacent_cell.type == CellType::MINE ? 1 : 0
-          rescue
-            # Do Nothing jeje
-          end
-        end
+    return if @type == CellType::MINE
+
+    @adjacent_mines = 0
+    (-1..1).each do |row_diff|
+      (-1..1).each do |col_diff|
+        adjacent_cell = matrix[@y_coordinate + row_diff][@x_coordinate + col_diff]
+        @adjacent_mines += adjacent_cell.type == CellType::MINE ? 1 : 0
+      rescue NoMethodError
+        next
       end
-      @adjacent_mines = number_adjacent_mines
     end
   end
 
