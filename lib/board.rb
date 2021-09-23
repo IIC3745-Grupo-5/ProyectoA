@@ -14,18 +14,16 @@ class Board < Observable
     @matrix = []
     @width, @height = Dimensions::BOARD[difficulty_level]
     @number_of_mines = Dimensions::MINES[difficulty_level]
-    setup
-  end
-
-  def setup
-    create_cell_array
     build
+    mark_adjacent_mines
   end
 
   def build
+    create_cell_array
     (0..@height).each do |row|
       row_array = []
       (0..@width).each do |col|
+        random_cell_type = @cell_array.delete_at(rand(@cell_array.length))
         row_array << Cell.new(col, row, random_cell_type)
       end
       @matrix << row_array
@@ -37,8 +35,17 @@ class Board < Observable
     @cell_array = [CellType::SAFE] * safe_cells + [CellType::MINE] * @number_of_mines
   end
 
-  def random_cell_type
-    @cell_array.delete_at(rand(@cell_array.length))
+  def mark_adjacent_mines
+    @matrix.each do |row|
+      row.each do |cell|
+        cell.mark_adjacent_mines(@matrix)
+      end
+    end
+  end
+
+  def discover_cell(x_coordinate, y_coordinate)
+    cell = @matrix[y_coordinate][x_coordinate]
+    cell.discovered = true
   end
 
   def print
