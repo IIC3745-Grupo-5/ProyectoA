@@ -31,6 +31,6 @@ class Cell
 
   def print
     to_display = @type == CellType::MINE ? @type : @adjacent_mines
-    !@discovered ? to_display : CellType::HIDDEN
+    @discovered ? to_display : CellType::HIDDEN
   end
 end
