@@ -36,9 +36,8 @@ class Cell
   end
 
   def print
-    if @flagged
-      return CellType::FLAGGED
-    end
+    return CellType::FLAGGED if @flagged
+
     to_display = @type == CellType::MINE ? @type : @adjacent_mines
     @discovered ? to_display : CellType::HIDDEN
   end

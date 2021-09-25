@@ -31,23 +31,36 @@ class Game
   def choose_move
     choose do |menu|
       menu.prompt = 'What do you want to do?'
-      menu.choice(:'Discover a cell') do
-        y_coordinate = ask 'In which row?: '
-        x_coordinate = ask 'In which column?: '
-        valid = @board.discover_cell(x_coordinate.to_i, y_coordinate.to_i)
-        if valid == "flagged"
-          say("Cannot discover a flagged cell")
-        end
-      end
-      menu.choice(:'Flag or unflag a cell') do # TODO extract duplicate code
-        y_coordinate = ask 'In which row?: '
-        x_coordinate = ask 'In which column?: '
-        valid = @board.flag_cell(x_coordinate.to_i, y_coordinate.to_i)
-        if valid == "discovered"
-          say("Cannot flag a discovered cell")
-        end
-      end
-      menu.choice(:Quit) { @playing = false }
+      show_choices(menu)
     end
+  end
+
+  def show_choices(menu)
+    menu.choice(:'Discover a cell') do
+      ask_choice('discover')
+    end
+    menu.choice(:'Flag or unflag a cell') do
+      ask_choice('flagged')
+    end
+    menu.choice(:Quit) { @playing = false }
+  end
+  
+  def ask_coordinates
+    y_coordinate = ask 'In which row?: '
+    x_coordinate = ask 'In which column?: '
+    return y_coordinate, x_coordinate
+  end
+
+  def ask_choice(choice)
+    y_coordinate, x_coordinate = ask_coordinates
+    valid = case choice
+            when :discover
+              @board.discover_cell(x_coordinate.to_i, y_coordinate.to_i)
+            when :flagged
+              @board.flag_cell(x_coordinate.to_i, y_coordinate.to_i)
+            else
+              say('👊 This choice does not exist 👊')
+            end
+    say("❗ Cannot #{choice} a #{valid} cell ❗") if %w[discovered flagged].include?(valid)
   end
 end
