@@ -45,7 +45,18 @@ class Board < Observable
 
   def discover_cell(x_coordinate, y_coordinate)
     cell = @matrix[y_coordinate][x_coordinate]
+    if cell.flagged
+      return 'flagged'
+    end
     cell.discovered = true
+  end
+
+  def flag_cell(x_coordinate, y_coordinate)
+    cell = @matrix[y_coordinate][x_coordinate]
+    if cell.discover
+      return 'discovered'
+    end
+    cell.flagged = cell.flagged ? false : true
   end
 
   def print

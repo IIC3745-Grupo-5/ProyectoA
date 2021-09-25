@@ -34,9 +34,19 @@ class Game
       menu.choice(:'Discover a cell') do
         y_coordinate = ask 'In which row?: '
         x_coordinate = ask 'In which column?: '
-        @board.discover_cell(x_coordinate.to_i, y_coordinate.to_i)
+        valid = @board.discover_cell(x_coordinate.to_i, y_coordinate.to_i)
+        if valid == "flagged"
+          say("Cannot discover a flagged cell")
+        end
       end
-      menu.choice(:'Flag or unflag a cell') { say('Not implemented yet...') }
+      menu.choice(:'Flag or unflag a cell') do # TODO extract duplicate code
+        y_coordinate = ask 'In which row?: '
+        x_coordinate = ask 'In which column?: '
+        valid = @board.flag_cell(x_coordinate.to_i, y_coordinate.to_i)
+        if valid == "discovered"
+          say("Cannot flag a discovered cell")
+        end
+      end
       menu.choice(:Quit) { @playing = false }
     end
   end
