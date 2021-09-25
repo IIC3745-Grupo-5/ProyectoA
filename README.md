@@ -12,4 +12,4 @@ Play game: `rake`
 
 Run linter: `rake lint`
 
-Run tests: `rake tests`
+Run tests: `rake test`
