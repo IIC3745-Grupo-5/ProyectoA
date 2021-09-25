@@ -59,7 +59,6 @@ class Game
     when 'flagged'
       valid = @board.flag_cell(x_coordinate.to_i, y_coordinate.to_i)
     end
-    puts valid
     say("❗ Cannot #{choice} a #{valid} cell ❗") if %w[discovered flagged].include?(valid)
   end
 end
