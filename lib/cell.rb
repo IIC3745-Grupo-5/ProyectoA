@@ -4,7 +4,7 @@ require_relative './constants/cell_type'
 
 # Class that creates an object representing a cell in the board
 class Cell
-  attr_accessor :discovered, :adjacent_mines
+  attr_accessor :discovered, :adjacent_mines, :flagged
   attr_reader :type
 
   def initialize(x_coordinate, y_coordinate, type, adjacent_mines = nil)
@@ -13,6 +13,7 @@ class Cell
     @type = type
     @discovered = false
     @adjacent_mines = adjacent_mines
+    @flagged = false
   end
 
   def mark_adjacent_mines(matrix)
@@ -35,6 +36,8 @@ class Cell
   end
 
   def print
+    return CellType::FLAGGED if @flagged
+
     to_display = @type == CellType::MINE ? @type : @adjacent_mines
     @discovered ? to_display : CellType::HIDDEN
   end
