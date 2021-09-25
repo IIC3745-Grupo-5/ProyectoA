@@ -44,23 +44,22 @@ class Game
     end
     menu.choice(:Quit) { @playing = false }
   end
-  
+
   def ask_coordinates
     y_coordinate = ask 'In which row?: '
     x_coordinate = ask 'In which column?: '
-    return y_coordinate, x_coordinate
+    [y_coordinate, x_coordinate]
   end
 
   def ask_choice(choice)
     y_coordinate, x_coordinate = ask_coordinates
-    valid = case choice
-            when :discover
-              @board.discover_cell(x_coordinate.to_i, y_coordinate.to_i)
-            when :flagged
-              @board.flag_cell(x_coordinate.to_i, y_coordinate.to_i)
-            else
-              say('👊 This choice does not exist 👊')
-            end
+    case choice
+    when 'discover'
+      valid = @board.discover_cell(x_coordinate.to_i, y_coordinate.to_i)
+    when 'flagged'
+      valid = @board.flag_cell(x_coordinate.to_i, y_coordinate.to_i)
+    end
+    puts valid
     say("❗ Cannot #{choice} a #{valid} cell ❗") if %w[discovered flagged].include?(valid)
   end
 end
