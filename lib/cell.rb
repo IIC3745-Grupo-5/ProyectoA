@@ -41,12 +41,16 @@ class Cell
       (-1..1).each do |col_diff|
         out_of_range(row_diff, col_diff) && next
         neighbor_cell = matrix[@y_coordinate + row_diff][@x_coordinate + col_diff]
-        neighbor_cell.discovered = true if neighbor_cell.adjacent_mines.positive?
-        neighbor_cell.discover_empty_neighbors(matrix) if neighbor_cell.empty && !neighbor_cell.discovered
+        check_if_neighbor_empty(matrix, neighbor_cell)
       rescue NoMethodError
         next
       end
     end
+  end
+
+  def check_if_neighbor_empty(matrix, cell)
+    cell.discovered = true if cell.adjacent_mines.positive?
+    cell.discover_empty_neighbors(matrix) if cell.empty && !cell.discovered
   end
 
   def out_of_range(row_diff, col_diff)
@@ -58,7 +62,7 @@ class Cell
   end
 
   def show_discovered
-    return @type if empty or @type == CellType::MINE
+    return @type if empty || @type == CellType::MINE
 
     @adjacent_mines
   end

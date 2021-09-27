@@ -22,6 +22,7 @@ class CellTest < Test::Unit::TestCase
   def test_print_discovered_neq
     cell = Cell.new(3, 4, CellType::SAFE)
     cell.discovered = true
+    cell.adjacent_mines = 0
     output = cell.print
     assert_not_equal(CellType::MINE, output)
   end
