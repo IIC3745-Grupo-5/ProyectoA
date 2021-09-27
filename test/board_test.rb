@@ -42,11 +42,10 @@ class BoardTest < Test::Unit::TestCase
   def test_discover_empty_neighbors
     (0..3).each do |col|
       (0..3).each do |row|
+        @board.matrix[col][row].type = CellType::SAFE
         if col == 3 || row == 3
-          @board.matrix[col][row].type = CellType::SAFE
           @board.matrix[col][row].adjacent_mines = 1
         else
-          @board.matrix[col][row].type = CellType::SAFE
           @board.matrix[col][row].adjacent_mines = 0
         end
       end
