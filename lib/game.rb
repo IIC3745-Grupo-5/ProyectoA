@@ -45,12 +45,6 @@ class Game
     menu.choice(:Quit) { @playing = false }
   end
 
-  # def ask_coordinates
-  # y_coordinate = ask 'In which row?: '
-  # x_coordinate = ask 'In which column?: '
-  # return [y_coordinate, x_coordinate]
-  # end
-
   def ask_coordinates
     y_coordinate = nil
     x_coordinate = nil
