@@ -45,10 +45,30 @@ class Game
     menu.choice(:Quit) { @playing = false }
   end
 
+  #def ask_coordinates
+   # y_coordinate = ask 'In which row?: '
+    #x_coordinate = ask 'In which column?: '
+    #return [y_coordinate, x_coordinate]
+  #end
+
   def ask_coordinates
-    y_coordinate = ask 'In which row?: '
-    x_coordinate = ask 'In which column?: '
+    y_coordinate = nil
+    x_coordinate = nil
+    loop do
+      y_coordinate = ask 'In which row?: '
+      x_coordinate = ask 'In which column?: '
+      valid_coord = coordinates_validation(y_coordinate, x_coordinate)
+      break if valid_coord
+      puts 'Please enter valid entry'
+    end
     [y_coordinate, x_coordinate]
+  end
+
+  def coordinates_validation(y_coordinate, x_coordinate)
+    if y_coordinate.to_i <= @board.width && x_coordinate.to_i <= @board.width
+      return true
+    end
+    return false 
   end
 
   def ask_choice(choice)

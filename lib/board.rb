@@ -9,7 +9,7 @@ require_relative './observer/observable'
 
 # Class that creates a board object, which can display a minesweeper board
 class Board < Observable
-  attr_reader :matrix
+  attr_reader :matrix, :width
 
   def initialize(difficulty_level = Level::BEGGINER)
     super()
