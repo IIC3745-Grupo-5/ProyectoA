@@ -2,7 +2,7 @@
 
 module CellType
   HIDDEN = '🔲'
-  SAFE = '🔳 '
+  SAFE = '  '
   MINE = '💣'
   FLAGGED = '🚩'
 end

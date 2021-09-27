@@ -8,8 +8,8 @@ module Dimensions
   }.freeze
 
   MINES = {
-    'BEGGINER' => 5, # 8%
-    'INTERMEDIATE' => 11, # 8%
-    'EXPERT' => 18 # 8%
+    'BEGGINER' => 12, # 18%
+    'INTERMEDIATE' => 36, # 25%
+    'EXPERT' => 92 # 36%
   }.freeze
 end
