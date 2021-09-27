@@ -11,6 +11,7 @@ end
 
 Rake::TestTask.new(:test) do |task|
   task.pattern = 'test/*_test.rb'
+  task.verbose = true
 end
 
 RuboCop::RakeTask.new(:lint) do |task|

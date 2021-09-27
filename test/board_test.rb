@@ -13,6 +13,54 @@ class BoardTest < Test::Unit::TestCase
     @board = Board.new(@difficulty_level)
   end
 
+  def test_discover_flagged_cell
+    @board.matrix[0][0].flagged = true
+    output = @board.discover_cell(0, 0)
+    assert_equal('flagged', output)
+  end
+
+  def test_discover_unflagged_cell
+    @board.discover_cell(0, 0)
+    discovered = @board.matrix[0][0].discovered
+    assert_equal(true, discovered)
+  end
+
+  def test_flag_discovered_cell
+    @board.matrix[0][0].discovered = true
+    output = @board.flag_cell(0, 0)
+    assert_equal('discovered', output)
+  end
+
+  def test_toggle_flag_undiscovered_cell
+    [true, false].each do |expected|
+      @board.flag_cell(0, 0)
+      flagged = @board.matrix[0][0].flagged
+      assert_equal(expected, flagged)
+    end
+  end
+
+  def test_discover_empty_neighbors
+    (0..3).each do |col|
+      (0..3).each do |row|
+        if col == 3 || row == 3
+          @board.matrix[col][row].type = CellType::SAFE
+          @board.matrix[col][row].adjacent_mines = 1
+        else
+          @board.matrix[col][row].type = CellType::SAFE
+          @board.matrix[col][row].adjacent_mines = 0
+        end
+      end
+    end
+
+    @board.discover_cell(0, 0)
+    (0..2).each do |col|
+      (0..2).each do |row|
+        discovered = @board.matrix[col][row].discovered
+        assert_equal(true, discovered)
+      end
+    end
+  end
+
   def test_print
     width = Dimensions::BOARD[@difficulty_level][0]
     height = Dimensions::BOARD[@difficulty_level][1]

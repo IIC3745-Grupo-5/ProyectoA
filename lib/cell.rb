@@ -4,8 +4,7 @@ require_relative './constants/cell_type'
 
 # Class that creates an object representing a cell in the board
 class Cell
-  attr_accessor :discovered, :adjacent_mines, :flagged
-  attr_reader :type
+  attr_accessor :discovered, :adjacent_mines, :flagged, :type
 
   def initialize(x_coordinate, y_coordinate, type, adjacent_mines = nil)
     @x_coordinate = x_coordinate
