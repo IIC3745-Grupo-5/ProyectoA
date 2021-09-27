@@ -22,7 +22,7 @@ class Cell
     @adjacent_mines = 0
     (-1..1).each do |row_diff|
       (-1..1).each do |col_diff|
-        ((@y_coordinate + row_diff).negative? or (@x_coordinate + col_diff).negative?) && next
+        out_of_range(row_diff, col_diff) && next
         check_neighbor(matrix, row_diff, col_diff)
       rescue NoMethodError
         next
@@ -35,10 +35,39 @@ class Cell
     @adjacent_mines += adjacent_cell.type == CellType::MINE ? 1 : 0
   end
 
+  def discover_empty_neighbors(matrix)
+    @discovered = true
+    (-1..1).each do |row_diff|
+      (-1..1).each do |col_diff|
+        out_of_range(row_diff, col_diff) && next
+        neighbor_cell = matrix[@y_coordinate + row_diff][@x_coordinate + col_diff]
+        neighbor_cell.discovered = true if neighbor_cell.adjacent_mines.positive?
+        neighbor_cell.discover_empty_neighbors(matrix) if neighbor_cell.empty && !neighbor_cell.discovered
+      rescue NoMethodError
+        next
+      end
+    end
+  end
+
+  def out_of_range(row_diff, col_diff)
+    (@y_coordinate + row_diff).negative? or (@x_coordinate + col_diff).negative?
+  end
+
+  def empty
+    @type == CellType::SAFE && @adjacent_mines.zero?
+  end
+
+  def show_discovered
+    return @type if empty or @type == CellType::MINE
+
+    @adjacent_mines
+  end
+
   def print
     return CellType::FLAGGED if @flagged
 
-    to_display = @type == CellType::MINE ? @type : @adjacent_mines
-    @discovered ? to_display : CellType::HIDDEN
+    return CellType::HIDDEN unless @discovered
+
+    show_discovered
   end
 end

@@ -4,12 +4,12 @@ require 'terminal-table'
 require_relative './cell'
 require_relative './constants/dimensions'
 require_relative './constants/cell_type'
-require_relative './constants/difficulty_type'
+require_relative './constants/level'
 require_relative './observer/observable'
 
 # Class that creates a board object, which can display a minesweeper board
 class Board < Observable
-  def initialize(difficulty_level = DifficultyType::BEGGINER)
+  def initialize(difficulty_level = Level::BEGGINER)
     super()
     @matrix = []
     @width, @height = Dimensions::BOARD[difficulty_level]
@@ -48,6 +48,7 @@ class Board < Observable
     return 'flagged' if cell.flagged
 
     cell.discovered = true
+    cell.discover_empty_neighbors(@matrix) if cell.empty
   end
 
   def flag_cell(x_coordinate, y_coordinate)

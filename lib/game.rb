@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative './board'
-require_relative './constants/difficulty_type'
+require_relative './constants/level'
 require 'highline/import'
 
 # Class that creates an object representing the game
@@ -11,9 +11,9 @@ class Game
     @playing = true
     choose do |menu|
       menu.prompt = 'Hello! Choose your difficulty:'
-      menu.choice(:Begginer) { @board = Board.new(DifficultyType::BEGGINER) }
-      menu.choice(:Intermediate) { @board = Board.new(DifficultyType::INTERMEDIATE) }
-      menu.choice(:Expert) { @board = Board.new(DifficultyType::EXPERT) }
+      menu.choice(:Begginer) { @board = Board.new(Level::BEGGINER) }
+      menu.choice(:Intermediate) { @board = Board.new(Level::INTERMEDIATE) }
+      menu.choice(:Expert) { @board = Board.new(Level::EXPERT) }
     end
     @board.print
     start_game
