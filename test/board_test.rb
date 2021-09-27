@@ -43,11 +43,11 @@ class BoardTest < Test::Unit::TestCase
     (0..3).each do |col|
       (0..3).each do |row|
         @board.matrix[col][row].type = CellType::SAFE
-        if col == 3 || row == 3
-          @board.matrix[col][row].adjacent_mines = 1
-        else
-          @board.matrix[col][row].adjacent_mines = 0
-        end
+        @board.matrix[col][row].adjacent_mines = if col == 3 || row == 3
+                                                   1
+                                                 else
+                                                   0
+                                                 end
       end
     end
 
