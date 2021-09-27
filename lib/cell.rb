@@ -49,10 +49,10 @@ class Cell
   end
 
   def check_if_neighbor_empty(matrix, cell)
-    unless cell.discovered
-      cell.discovered = true if cell.adjacent_mines.positive?
-      cell.discover_empty_neighbors(matrix) if cell.empty
-    end
+    return if cell.discovered
+
+    cell.discovered = true if cell.adjacent_mines.positive?
+    cell.discover_empty_neighbors(matrix) if cell.empty
   end
 
   def out_of_range(row_diff, col_diff)
