@@ -57,7 +57,7 @@ class Game
     loop do
       y_coordinate = ask 'In which row?: '
       x_coordinate = ask 'In which column?: '
-      valid_coord = coordinates_validation(y_coordinate, x_coordinate)
+      valid_coord = coordinates_validation(y_coordinate.to_i, x_coordinate.to_i)
       break if valid_coord
 
       puts 'Please enter valid entry'
@@ -66,7 +66,9 @@ class Game
   end
 
   def coordinates_validation(y_coordinate, x_coordinate)
-    return true if y_coordinate.to_i <= @board.width && x_coordinate.to_i <= @board.width
+    if y_coordinate <= @board.width && x_coordinate <= @board.width && y_coordinate >= 0 && x_coordinate >= 0
+      return true
+    end
 
     false
   end
