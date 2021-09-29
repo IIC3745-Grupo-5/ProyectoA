@@ -51,6 +51,7 @@ class Board < Observable
 
     cell.discovered = true
     cell.discover_empty_neighbors(@matrix) if cell.empty
+    return 'explosion' if cell.type == CellType::MINE
   end
 
   def flag_cell(x_coordinate, y_coordinate)

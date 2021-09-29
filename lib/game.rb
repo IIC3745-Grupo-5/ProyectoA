@@ -76,5 +76,10 @@ class Game
       valid = @board.flag_cell(x_coordinate.to_i, y_coordinate.to_i)
     end
     say("❗ Cannot #{choice} a #{valid} cell ❗") if %w[discovered flagged].include?(valid)
+    lose if valid == 'explosion'
+  end
+
+  def lose
+    say('💥 You stepped on a MINE 💥')
   end
 end
