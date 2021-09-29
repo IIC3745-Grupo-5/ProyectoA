@@ -87,8 +87,8 @@ class Game
   def win_check
     @board.matrix.each do |row|
       row.each do |cell|
-        next unless cell.type == CellType::MINE
-        return true unless cell.flagged
+        next unless cell.type == CellType::SAFE
+        return true unless cell.discovered
       end
     end
     puts '🏆 VICTORY! 🏆'
