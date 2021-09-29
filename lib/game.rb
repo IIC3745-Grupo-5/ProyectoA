@@ -23,6 +23,7 @@ class Game
     loop do
       choose_move
       @playing && @board.print
+      win_check
       break unless @playing
     end
     puts 'Good Bye!'
@@ -81,5 +82,16 @@ class Game
 
   def lose
     say('💥 You stepped on a MINE 💥')
+  end
+
+  def win_check
+    @board.matrix.each do |row|
+      row.each do |cell|
+        next unless cell.type == CellType::MINE
+        return true unless cell.flagged
+      end
+    end
+    puts '🏆 VICTORY! 🏆'
+    @playing = false
   end
 end
