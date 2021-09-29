@@ -23,6 +23,7 @@ class Game
     loop do
       choose_move
       @playing && @board.print
+      win_check
       break unless @playing
     end
     puts 'Good Bye!'
@@ -76,5 +77,18 @@ class Game
       valid = @board.flag_cell(x_coordinate.to_i, y_coordinate.to_i)
     end
     say("❗ Cannot #{choice} a #{valid} cell ❗") if %w[discovered flagged].include?(valid)
+  end
+
+  def win_check
+    @board.matrix.each do |row|
+      row.each do |cell|
+        if cell.type == CellType::MINE 
+          if !cell.flagged
+            return
+          end
+        end
+      end
+    end
+    @playing = false
   end
 end
