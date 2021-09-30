@@ -6,9 +6,14 @@ require 'highline/import'
 
 # Class that creates an object representing the game
 class Game
-  def initialize
-    @board = nil
+  attr_reader :board, :playing
+
+  def initialize(board = Board.new(Level::EXPERT))
+    @board = board
     @playing = true
+  end
+
+  def start_game
     choose do |menu|
       menu.prompt = 'Hello! Choose your difficulty:'
       menu.choice(:Begginer) { @board = Board.new(Level::BEGGINER) }
@@ -16,24 +21,20 @@ class Game
       menu.choice(:Expert) { @board = Board.new(Level::EXPERT) }
     end
     @board.print
-    start_game
+    choose_move
   end
 
-  def start_game
+  def choose_move
     loop do
-      choose_move
+      choose do |menu|
+        menu.prompt = 'What do you want to do?'
+        show_choices(menu)
+      end
       @playing && @board.print
       win_check
       break unless @playing
     end
     puts 'Good Bye!'
-  end
-
-  def choose_move
-    choose do |menu|
-      menu.prompt = 'What do you want to do?'
-      show_choices(menu)
-    end
   end
 
   def show_choices(menu)
@@ -87,8 +88,8 @@ class Game
   def win_check
     @board.matrix.each do |row|
       row.each do |cell|
-        next unless cell.type == CellType::MINE
-        return true unless cell.flagged
+        next unless cell.type == CellType::SAFE
+        return true unless cell.discovered
       end
     end
     puts '🏆 VICTORY! 🏆'
