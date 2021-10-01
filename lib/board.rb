@@ -85,4 +85,17 @@ class Board < Observable
     end
     printable_board
   end
+
+  def show_bombs
+    @matrix.each_with_index do |row, index|
+      row.each do |cell|
+        cell.discovered = true if cell.type == CellType::MINE
+      end
+    end
+  end
+
+  def explode_bomb(y_coordinate, x_coordinate)
+    cell = @matrix[y_coordinate][x_coordinate]
+    cell.type = CellType::EXPLODED
+  end
 end

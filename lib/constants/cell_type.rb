@@ -5,4 +5,5 @@ module CellType
   SAFE = '  '
   MINE = '💣'
   FLAGGED = '🚩'
+  EXPLODED = '💥'
 end
