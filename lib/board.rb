@@ -96,7 +96,7 @@ class Board < Observable
   end
 
   def show_bombs
-    @matrix.each_with_index do |row, index|
+    @matrix.each_with_index do |row|
       row.each do |cell|
         cell.discovered = true if cell.type == CellType::MINE
       end
