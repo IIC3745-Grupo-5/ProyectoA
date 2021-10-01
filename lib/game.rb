@@ -42,7 +42,7 @@ class Game
       ask_choice('discover')
     end
     menu.choice(:'Flag or unflag a cell') do
-      ask_choice('flagged')
+      ask_choice('flag')
     end
     menu.choice(:Quit) { @playing = false }
   end
@@ -74,7 +74,7 @@ class Game
     case choice
     when 'discover'
       valid = @board.discover_cell(x_coordinate.to_i, y_coordinate.to_i)
-    when 'flagged'
+    when 'flag'
       valid = @board.flag_cell(x_coordinate.to_i, y_coordinate.to_i)
     end
     say("❗ Cannot #{choice} a #{valid} cell ❗") if %w[discovered flagged].include?(valid)
