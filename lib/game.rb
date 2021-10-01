@@ -48,8 +48,8 @@ class Game
   end
 
   def ask_coordinates
-    y_coordinate = ask('In which row?: ', Integer) { |q| q.in = 0..@board.width}
-    x_coordinate = ask('In which column?: ', Integer) { |q| q.in = 0..@board.width}
+    y_coordinate = ask('In which row?: ', Integer) { |q| q.in = 0..@board.width }
+    x_coordinate = ask('In which column?: ', Integer) { |q| q.in = 0..@board.width }
     [y_coordinate, x_coordinate]
   end
 
