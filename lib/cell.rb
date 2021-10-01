@@ -63,7 +63,7 @@ class Cell
   end
 
   def show_discovered
-    return @type if empty || @type == CellType::MINE
+    return @type if empty || @type == CellType::MINE || @type == CellType::EXPLODED
 
     @adjacent_mines
   end
