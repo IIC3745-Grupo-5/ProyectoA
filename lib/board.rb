@@ -9,13 +9,14 @@ require_relative './observer/observable'
 
 # Class that creates a board object, which can display a minesweeper board
 class Board < Observable
-  attr_reader :matrix, :width, :number_of_mines
+  attr_reader :matrix, :width, :number_of_mines, :number_of_flags
 
   def initialize(difficulty_level = Level::BEGGINER)
     super()
     @matrix = []
     @width, @height = Dimensions::BOARD[difficulty_level]
     @number_of_mines = Dimensions::MINES[difficulty_level]
+    @number_of_flags = Dimensions::MINES[difficulty_level] # The number of flags is the same that the number of mines
     build
     mark_adjacent_mines
   end
@@ -58,13 +59,21 @@ class Board < Observable
     cell = @matrix[y_coordinate][x_coordinate]
     return 'discovered' if cell.discovered
 
-    cell.flagged = cell.flagged ? false : true
+    if cell.flagged == false
+      return 'no_flags' if @number_of_flags.zero?
+
+      cell.flagged = true
+      @number_of_flags -= 1
+    else
+      cell.flagged = false
+      @number_of_flags += 1
+    end
   end
 
   def print
     rows = create_printable_board
     board = Terminal::Table.new rows: rows
-    board.title = 'Mine Sweeper'
+    board.title = "                Mine Sweeper       🚩 Flags: #{@number_of_flags}"
     board.headings = ['y\x'].concat((0..@height).to_a)
     board.style = {
       border: Terminal::Table::UnicodeThickEdgeBorder.new,
