@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
+require_relative '../ui'
+
 # Class for creating an observable object following the observer desgin pattern
 class Observable
   def initialize
     @observers = []
+    @ui = Ui.new
   end
 
   def add_observer(observer)

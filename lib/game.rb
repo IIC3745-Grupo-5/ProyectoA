@@ -3,6 +3,7 @@
 require_relative './board'
 require_relative './constants/level'
 require 'highline/import'
+require_relative './ui'
 
 # Class that creates an object representing the game
 class Game
@@ -11,6 +12,7 @@ class Game
   def initialize(board = Board.new(Level::EXPERT))
     @board = board
     @playing = true
+    @ui = Ui.new
   end
 
   def start_game
@@ -18,7 +20,7 @@ class Game
       menu.prompt = 'Hello! Choose your difficulty:'
       menu.choice(:Begginer) { @board = Board.new(Level::BEGGINER) }
       menu.choice(:Intermediate) { @board = Board.new(Level::INTERMEDIATE) }
-      menu.choice(:Expert) { @board = Board.new(Level::EXPERT) }
+      menu.choice(:Experts) { @board = Board.new(Level::EXPERT) }
     end
     @board.print
     choose_move
@@ -34,7 +36,7 @@ class Game
       win_check
       break unless @playing
     end
-    puts 'Good Bye!'
+    @ui.print_console('Good Bye')
   end
 
   def show_choices(menu)
@@ -61,8 +63,8 @@ class Game
     when 'flag'
       valid = @board.flag_cell(x_coordinate.to_i, y_coordinate.to_i)
     end
-    say("❗ Cannot #{choice} a #{valid} cell ❗") if %w[discovered flagged].include?(valid)
-    say("❗ You don't have more flags ❗") if %w[no_flags].include?(valid)
+    @ui.say("❗ Cannot #{choice} a #{valid} cell ❗") if %w[discovered flagged].include?(valid)
+    @ui.say("❗ You don't have more flags ❗") if %w[no_flags].include?(valid)
     lose(y_coordinate.to_i, x_coordinate.to_i) if valid == 'explosion'
   end
 
@@ -71,7 +73,7 @@ class Game
     @board.explode_bomb(y_coordinate, x_coordinate)
     @board.show_bombs
     @board.print
-    puts 'You lost :('
+    @ui.print_console('You lost :(')
     @playing = false
   end
 
@@ -82,7 +84,7 @@ class Game
         return true unless cell.discovered
       end
     end
-    puts '🏆 VICTORY! 🏆'
+    @ui.print_console('🏆 VICTORY! 🏆')
     @playing = false
   end
 end
