@@ -69,7 +69,7 @@ class Game
   end
 
   def lose(y_coordinate, x_coordinate)
-    say('💥 You stepped on a MINE 💥')
+    @ui.say('💥 You stepped on a MINE 💥')
     @board.explode_bomb(y_coordinate, x_coordinate)
     @board.show_bombs
     @board.print
