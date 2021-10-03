@@ -79,7 +79,7 @@ class Board < Observable
       border: Terminal::Table::UnicodeThickEdgeBorder.new,
       all_separators: true
     }
-    puts board
+    @ui.print_console(board)
     rows
   end
 
