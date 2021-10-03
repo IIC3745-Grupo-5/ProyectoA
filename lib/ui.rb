@@ -6,8 +6,6 @@ require 'highline/import'
 class Ui
   @input = new
 
-  private_class_method :new
-
   class << self
     attr_reader :input
   end
