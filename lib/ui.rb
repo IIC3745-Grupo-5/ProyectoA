@@ -4,13 +4,12 @@ require 'highline/import'
 
 # Class who ui inputs and prints
 class Ui
-
   @input = new
-  
+
   private_class_method :new
-  
-  def self.input
-    @input
+
+  class << self
+    attr_reader :input
   end
 
   def print_console(input)
