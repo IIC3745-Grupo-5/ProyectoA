@@ -2,9 +2,16 @@
 
 require 'highline/import'
 
-# Class who administrate the prints
+# Class who ui inputs and prints
 class Ui
-  attr_reader :input
+
+  @input = new
+  
+  private_class_method :new
+  
+  def self.input
+    @input
+  end
 
   def print_console(input)
     puts input
