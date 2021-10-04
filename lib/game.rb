@@ -64,7 +64,7 @@ class Game
   end
 
   def make_choice(choice, x_coordinate = -1, y_coordinate = -1)
-    y_coordinate, x_coordinate = @ui.ask_coordinates(@board.width) if x_coordinate == -1
+    y_coordinate, x_coordinate = @ui.ask_coordinates(@board.width, @board.height) if x_coordinate == -1
     valid = handle_valid(choice, x_coordinate, y_coordinate)
     @ui.print_console("❗ Cannot #{choice} a #{valid} cell ❗") if %w[discovered flagged].include?(valid)
     @ui.print_console("❗ You don't have more flags ❗") if %w[no_flags].include?(valid)
