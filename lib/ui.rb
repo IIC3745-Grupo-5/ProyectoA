@@ -28,9 +28,9 @@ class Ui
     end
   end
 
-  # width is @board.width
-  def ask_coordinates(width)
-    y_coordinate = ask('In which row?: ', Integer) { |q| q.in = 0..width }
+  # width is @board.width and height is @board.height
+  def ask_coordinates(width, height)
+    y_coordinate = ask('In which row?: ', Integer) { |q| q.in = 0..height }
     x_coordinate = ask('In which column?: ', Integer) { |q| q.in = 0..width }
     [y_coordinate, x_coordinate]
   end

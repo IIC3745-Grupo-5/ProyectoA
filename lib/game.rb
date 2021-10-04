@@ -37,7 +37,7 @@ class Game
   def handle_choice(choice, testing = 'false')
     if %w[discover flag].include?(choice)
       make_choice(choice) if testing == 'false'
-      @board.print if testing == 'false'
+      @board.print
     else
       @playing = false
     end

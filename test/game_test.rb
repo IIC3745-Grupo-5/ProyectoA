@@ -46,7 +46,7 @@ class GameTest < Test::Unit::TestCase
 
   def test_difficulty_begginer
     @game.start_game('Begginer')
-    area = @game.board.width * @game.board.width
+    area = @game.board.width * @game.board.height
     expected_dimensions = Dimensions::BOARD[Level::BEGGINER]
     expected = expected_dimensions[0] * expected_dimensions[1]
     assert_equal(expected, area)
@@ -54,7 +54,7 @@ class GameTest < Test::Unit::TestCase
 
   def test_difficulty_intermediate
     @game.start_game('Intermediate')
-    area = @game.board.width * @game.board.width
+    area = @game.board.width * @game.board.height
     expected_dimensions = Dimensions::BOARD[Level::INTERMEDIATE]
     expected = expected_dimensions[0] * expected_dimensions[1]
     assert_equal(expected, area)
@@ -62,7 +62,7 @@ class GameTest < Test::Unit::TestCase
 
   def test_difficulty_expert
     @game.start_game('Expert')
-    area = @game.board.width * @game.board.width
+    area = @game.board.width * @game.board.height
     expected_dimensions = Dimensions::BOARD[Level::EXPERT]
     expected = expected_dimensions[0] * expected_dimensions[1]
     assert_equal(expected, area)
