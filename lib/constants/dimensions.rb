@@ -9,7 +9,7 @@ module Dimensions
 
   MINES = {
     'BEGGINER' => 10,
-    'INTERMEDIATE' => 40,
-    'EXPERT' => 99
+    'INTERMEDIATE' => 30,
+    'EXPERT' => 78
   }.freeze
 end

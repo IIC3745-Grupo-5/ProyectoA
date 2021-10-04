@@ -41,6 +41,8 @@ class Cell
         out_of_range(row_diff, col_diff) && next
         neighbor_cell = matrix[@y_coordinate + row_diff][@x_coordinate + col_diff]
         check_if_neighbor_empty(matrix, neighbor_cell)
+      rescue NoMethodError
+        next
       end
     end
   end
