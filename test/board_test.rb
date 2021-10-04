@@ -70,4 +70,14 @@ class BoardTest < Test::Unit::TestCase
     output = @board.print
     assert_equal(expected, output)
   end
+
+  def test_discover_empty_border_cell
+    width = Dimensions::BOARD[@difficulty_level][0]
+    height = Dimensions::BOARD[@difficulty_level][1]
+    cell = @board.matrix[height][width]
+    cell.type = CellType::SAFE
+    cell.adjacent_mines = 0
+    @board.discover_cell(width, height)
+    assert_equal(true, cell.discovered)
+  end
 end
