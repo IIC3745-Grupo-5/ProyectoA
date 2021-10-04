@@ -23,3 +23,4 @@
 # Used by RuboCop. Remote config files pulled in
 from inherit_from directive.
 .rubocop-https?--*
+.ruby-version

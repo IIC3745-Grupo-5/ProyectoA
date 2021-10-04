@@ -10,11 +10,32 @@ class Ui
     attr_reader :input
   end
 
-  def print_console(input)
-    puts input
+  def ask_difficulty
+    choose do |menu|
+      menu.prompt = 'Hello! Choose your difficulty:'
+      menu.choice(:Begginer) { return 'Begginer' }
+      menu.choice(:Intermediate) { return 'Intermediate' }
+      menu.choice(:Expert) { return 'Expert' }
+    end
   end
 
-  def say(input = '')
-    say(input)
+  def ask_choice
+    choose do |menu|
+      menu.prompt = 'What do you want to do?'
+      menu.choice(:'Discover a cell') { return 'discover' }
+      menu.choice(:'Flag or unflag a cell') { return 'flag' }
+      menu.choice(:Quit) { return 'quit' }
+    end
+  end
+
+  # width is @board.width
+  def ask_coordinates(width)
+    y_coordinate = ask('In which row?: ', Integer) { |q| q.in = 0..width }
+    x_coordinate = ask('In which column?: ', Integer) { |q| q.in = 0..width }
+    [y_coordinate, x_coordinate]
+  end
+
+  def print_console(input)
+    puts input
   end
 end
