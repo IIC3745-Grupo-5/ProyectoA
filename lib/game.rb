@@ -16,14 +16,14 @@ class Game
   end
 
   def difficulty_setting(difficulty)
-    case difficulty
-    when 'Begginer'
-      @board = Board.new(Level::BEGGINER)
-    when 'Intermediate'
-      @board = Board.new(Level::INTERMEDIATE)
-    when 'Expert'
-      @board = Board.new(Level::EXPERT)
-    end
+    @board = case difficulty
+             when 'Expert'
+               Board.new(Level::EXPERT)
+             when 'Intermediate'
+               Board.new(Level::INTERMEDIATE)
+             else
+               Board.new(Level::BEGGINER)
+             end
   end
 
   def start_game(testing)
