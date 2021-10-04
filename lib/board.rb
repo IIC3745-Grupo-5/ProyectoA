@@ -9,7 +9,7 @@ require_relative './ui'
 
 # Class that creates a board object, which can display a minesweeper board
 class Board
-  attr_reader :matrix, :width, :number_of_mines, :number_of_flags
+  attr_reader :matrix, :width, :height, :number_of_mines, :number_of_flags
 
   def initialize(difficulty_level = Level::BEGGINER)
     super()

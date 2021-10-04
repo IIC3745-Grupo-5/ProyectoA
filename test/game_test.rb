@@ -46,7 +46,7 @@ class GameTest < Test::Unit::TestCase
 
   def test_difficulty_begginer
     @game.start_game('Begginer')
-    area = @game.board.width * @game.board.width
+    area = @game.board.width * @game.board.height
     expected_dimensions = Dimensions::BOARD[Level::BEGGINER]
     expected = expected_dimensions[0] * expected_dimensions[1]
     assert_equal(expected, area)
@@ -54,7 +54,7 @@ class GameTest < Test::Unit::TestCase
 
   def test_difficulty_intermediate
     @game.start_game('Intermediate')
-    area = @game.board.width * @game.board.width
+    area = @game.board.width * @game.board.height
     expected_dimensions = Dimensions::BOARD[Level::INTERMEDIATE]
     expected = expected_dimensions[0] * expected_dimensions[1]
     assert_equal(expected, area)
@@ -62,24 +62,9 @@ class GameTest < Test::Unit::TestCase
 
   def test_difficulty_expert
     @game.start_game('Expert')
-    area = @game.board.width * @game.board.width
+    area = @game.board.width * @game.board.height
     expected_dimensions = Dimensions::BOARD[Level::EXPERT]
     expected = expected_dimensions[0] * expected_dimensions[1]
     assert_equal(expected, area)
-  end
-
-  def test_handle_choice_discover
-    @game.handle_choice('discover', true)
-    assert_equal(true, @game.playing)
-  end
-
-  def test_handle_choice_flag
-    @game.handle_choice('flag', true)
-    assert_equal(true, @game.playing)
-  end
-
-  def test_handle_choice_quit
-    @game.handle_choice('quit', true)
-    assert_equal(false, @game.playing)
   end
 end

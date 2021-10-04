@@ -34,9 +34,9 @@ class Game
     testing.nil? && choose_move
   end
 
-  def handle_choice(choice, testing: false)
+  def handle_choice(choice, testing = 'false')
     if %w[discover flag].include?(choice)
-      make_choice(choice) unless testing
+      make_choice(choice) if testing == 'false'
       @board.print
     else
       @playing = false
