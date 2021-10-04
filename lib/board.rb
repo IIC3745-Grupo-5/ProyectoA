@@ -5,10 +5,10 @@ require_relative './cell'
 require_relative './constants/dimensions'
 require_relative './constants/cell_type'
 require_relative './constants/level'
-require_relative './observer/observable'
+require_relative './ui'
 
 # Class that creates a board object, which can display a minesweeper board
-class Board < Observable
+class Board
   attr_reader :matrix, :width, :number_of_mines, :number_of_flags
 
   def initialize(difficulty_level = Level::BEGGINER)
@@ -17,6 +17,7 @@ class Board < Observable
     @width, @height = Dimensions::BOARD[difficulty_level]
     @number_of_mines = Dimensions::MINES[difficulty_level]
     @number_of_flags = Dimensions::MINES[difficulty_level] # The number of flags is the same that the number of mines
+    @ui = Ui.new
     build
     mark_adjacent_mines
   end

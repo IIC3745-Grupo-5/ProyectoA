@@ -2,78 +2,81 @@
 
 require_relative './board'
 require_relative './constants/level'
-require 'highline/import'
 require_relative './ui'
+require 'highline/import'
 
 # Class that creates an object representing the game
 class Game
   attr_reader :board, :playing
 
-  def initialize(board = Board.new(Level::EXPERT))
+  def initialize(board = Board.new(Level::BEGGINER))
     @board = board
     @playing = true
     @ui = Ui.new
   end
 
-  def start_game
-    choose do |menu|
-      menu.prompt = 'Hello! Choose your difficulty:'
-      menu.choice(:Begginer) { @board = Board.new(Level::BEGGINER) }
-      menu.choice(:Intermediate) { @board = Board.new(Level::INTERMEDIATE) }
-      menu.choice(:Experts) { @board = Board.new(Level::EXPERT) }
-    end
-    @board.print
-    choose_move
+  def difficulty_setting(difficulty)
+    @board = case difficulty
+             when 'Expert'
+               Board.new(Level::EXPERT)
+             when 'Intermediate'
+               Board.new(Level::INTERMEDIATE)
+             else
+               Board.new(Level::BEGGINER)
+             end
   end
 
-  def choose_move
+  def start_game(testing)
+    testing.nil? && chosen_difficulty = @ui.ask_difficulty
+    difficulty = chosen_difficulty || testing
+    difficulty_setting(difficulty)
+    @board.print
+    testing.nil? && choose_move
+  end
+
+  def handle_choice(choice, testing = 'false')
+    if %w[discover flag].include?(choice)
+      make_choice(choice) if testing == 'false'
+      @board.print if testing == 'false'
+    else
+      @playing = false
+    end
+  end
+
+  def choose_move(testing_choice = 'false')
     loop do
-      choose do |menu|
-        menu.prompt = 'What do you want to do?'
-        show_choices(menu)
-      end
-      @playing && @board.print
+      choice = testing_choice == 'false' ? @ui.ask_choice : testing_choice
+      handle_choice(choice, testing_choice)
       win_check
       break unless @playing
     end
-    @ui.print_console('Good Bye')
+    @ui.print_console('Good Bye') if testing_choice == 'false'
   end
 
-  def show_choices(menu)
-    menu.choice(:'Discover a cell') do
-      ask_choice('discover')
-    end
-    menu.choice(:'Flag or unflag a cell') do
-      ask_choice('flag')
-    end
-    menu.choice(:Quit) { @playing = false }
-  end
-
-  def ask_coordinates
-    y_coordinate = @ui.ask('In which row?: ', Integer) { |q| q.in = 0..@board.width }
-    x_coordinate = @ui.ask('In which column?: ', Integer) { |q| q.in = 0..@board.width }
-    [y_coordinate, x_coordinate]
-  end
-
-  def ask_choice(choice)
-    y_coordinate, x_coordinate = ask_coordinates
+  def handle_valid(choice, x_coordinate, y_coordinate)
     case choice
     when 'discover'
       valid = @board.discover_cell(x_coordinate.to_i, y_coordinate.to_i)
     when 'flag'
       valid = @board.flag_cell(x_coordinate.to_i, y_coordinate.to_i)
     end
-    @ui.say("❗ Cannot #{choice} a #{valid} cell ❗") if %w[discovered flagged].include?(valid)
-    @ui.say("❗ You don't have more flags ❗") if %w[no_flags].include?(valid)
+    valid
+  end
+
+  def make_choice(choice, x_coordinate = -1, y_coordinate = -1)
+    y_coordinate, x_coordinate = @ui.ask_coordinates(@board.width) if x_coordinate == -1
+    valid = handle_valid(choice, x_coordinate, y_coordinate)
+    @ui.print_console("❗ Cannot #{choice} a #{valid} cell ❗") if %w[discovered flagged].include?(valid)
+    @ui.print_console("❗ You don't have more flags ❗") if %w[no_flags].include?(valid)
     lose(y_coordinate.to_i, x_coordinate.to_i) if valid == 'explosion'
   end
 
   def lose(y_coordinate, x_coordinate)
-    @ui.say('💥 You stepped on a MINE 💥')
+    @ui.print_console('💥 You stepped on a MINE 💥')
     @board.explode_bomb(y_coordinate, x_coordinate)
     @board.show_bombs
     @board.print
-    @ui.print_console('You lost :(')
+    @ui.print_console('You lost 🙁')
     @playing = false
   end
 
