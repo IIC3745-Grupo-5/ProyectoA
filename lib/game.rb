@@ -43,14 +43,14 @@ class Game
     end
   end
 
-  def choose_move
+  def choose_move(testing_choice = 'false')
     loop do
-      choice = @ui.ask_choice
-      handle_choice(choice)
+      choice = testing_choice == 'false' ? @ui.ask_choice : testing_choice
+      handle_choice(choice, testing_choice)
       win_check
       break unless @playing
     end
-    @ui.print_console('Good Bye')
+    @ui.print_console('Good Bye') if testing_choice == 'false'
   end
 
   def handle_valid(choice, x_coordinate, y_coordinate)

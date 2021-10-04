@@ -67,4 +67,19 @@ class GameTest < Test::Unit::TestCase
     expected = expected_dimensions[0] * expected_dimensions[1]
     assert_equal(expected, area)
   end
+
+  # def test_handle_choice_discover
+  #   @game.choose_move('discover')
+  #   assert_equal(true, @game.playing)
+  # end
+
+  # def test_handle_choice_flag
+  #   @game.choose_move('flag')
+  #   assert_equal(true, @game.playing)
+  # end
+
+  def test_handle_choice_quit
+    @game.choose_move('quit')
+    assert_equal(false, @game.playing)
+  end
 end
